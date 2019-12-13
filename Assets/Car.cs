@@ -12,25 +12,20 @@ public class Car : MonoBehaviour
     string port = "5000";
     private float prevVert = 0f;
     private float prevHoriz = 0f;
-    private float prevVertTime = 0f;
-    private float prevHorizTime = 0f;
 
     // Update is called once per frame
     void Update()
     {
         float currentVert = Input.GetAxis("Vertical");
-        if (currentVert != 0f && prevVertTime + Math.Abs(prevVert / 100.0) <= Time.time)
-        {
+        if (currentVert != prevVert) {
             prevVert = currentVert;
-            prevVertTime = Time.time;
             StartCoroutine(move("drive", currentVert));
         }
         float currentHoriz = Input.GetAxis("Horizontal");
-        if (currentHoriz != 0f && prevHorizTime + Math.Abs(prevHoriz / 100.0) <= Time.time)
+        if (currentHoriz != prevHoriz)
         {
             prevHoriz = currentHoriz;
-            prevHorizTime = Time.time;
-            StartCoroutine(move("turn", Input.GetAxis("Horizontal")));
+            StartCoroutine(move("turn", currentHoriz));
         }
 
     }
